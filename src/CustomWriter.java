@@ -1,4 +1,6 @@
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Formatter;
 import java.util.Scanner;
 
@@ -13,7 +15,11 @@ public class CustomWriter
     {
         try
         {
-            Formatter outputStream = new Formatter("harambe.txt");
+            Formatter outputFile = new Formatter("outputFile.txt");
+
+            //to make a file that can append an existing file
+            FileWriter fw = new FileWriter("appendFile.txt", true);
+            Formatter appendFile = new Formatter(fw);
 
             Scanner keyboard = new Scanner(System.in);
             String userInput;
@@ -25,13 +31,18 @@ public class CustomWriter
 
                 userInput = keyboard.nextLine();
                 if (!userInput.equalsIgnoreCase("exit"))
-                    outputStream.format(userInput + "\n");
+                {
+                    outputFile.format(userInput + "\n");
+                    appendFile.format(userInput + "\n");
+                }
+
 
             } while (!userInput.equalsIgnoreCase("exit"));
 
-            outputStream.close();
+            outputFile.close();
+            appendFile.close();
         }
-        catch (FileNotFoundException e)
+        catch (Exception e)
         {
             System.out.print("Sorry we cannot write to harambe.txt");
         }
